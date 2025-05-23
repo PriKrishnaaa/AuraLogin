@@ -1,1 +1,27 @@
   
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Mood-Based Vibe</title>
+</head>
+<body>
+  <h1>🌀 Your Mood Vibe 🌀</h1>
+
+  <p><strong>Quote:</strong> {{ mood_data.quote }}</p>
+  <p><strong>Gen Z Slang:</strong> {{ mood_data.slang }}</p>
+  <p><strong>Outfit Suggestion:</strong> {{ mood_data.outfit }}</p>
+
+  <h3>🎶 Your Playlist:</h3>
+  <ul>
+    {% for song in mood_data.playlist %}
+      <li>{{ song }}</li>
+    {% endfor %}
+  </ul>
+
+  <br>
+  <a href="/distraction">Need a little reset? Click for affirmations & books 💖</a>
+  <br><br>
+  <a href="/journals">Spill the Vibe – View Journals 💬</a>
+</body>
+</html>

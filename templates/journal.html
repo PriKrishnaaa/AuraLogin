@@ -1,1 +1,29 @@
- 
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Spill the Vibe – Journal Wall</title>
+</head>
+<body>
+  <h1>📝 Spill the Vibe – Anonymous Journal Wall</h1>
+
+  {% if entries %}
+    <ul>
+      {% for entry in entries %}
+        <li>{{ entry }}</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No journal entries yet. Be the first to share your vibe!</p>
+  {% endif %}
+
+  <h2>💌 Share Your Mood</h2>
+  <form action="/journal" method="POST">
+    <textarea name="entry" rows="4" cols="50" placeholder="Type your vibe..."></textarea><br>
+    <button type="submit">Submit</button>
+  </form>
+
+  <br><a href="/">Back to Home</a>
+</body>
+</html>
+
