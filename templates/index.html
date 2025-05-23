@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AuraLogin – Enter Your Vibe</title>
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+  <div class="form-container">
+    <h1>🌟 Enter Your Aura</h1>
+    <form action="/submit_form" method="POST">
+      <label>Name:</label>
+      <input type="text" name="name" required><br>
+
+      <label>Gender:</label>
+      <select name="gender" required>
+        <option value="">--Select--</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="nonbinary">Non-Binary</option>
+      </select><br>
+
+      <label>Date of Birth:</label>
+      <input type="date" name="dob" required><br>
+
+      <button type="submit">Reveal My Aura ✨</button>
+    </form>
+  </div>
+</body>
+</html>
+ 

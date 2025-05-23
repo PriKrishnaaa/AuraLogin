@@ -1,0 +1,25 @@
+  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Anime Aura</title>
+</head>
+<body>
+  <h1>✨ Your Anime Aura ✨</h1>
+  <p><strong>Name:</strong> {{ alter_ego.anime_name }}</p>
+  <p><strong>Vibe Color:</strong> {{ alter_ego.vibe_color }}</p>
+  <p><strong>Star Element:</strong> {{ alter_ego.star_element }}</p>
+
+  <h2>💭 How are you feeling right now?</h2>
+  <form action="/mood" method="POST">
+    <select name="mood" required>
+      <option value="">--Select Mood--</option>
+      <option value="happy">😊 Happy</option>
+      <option value="sad">😔 Sad</option>
+      <!-- You can add more moods -->
+    </select><br><br>
+    <button type="submit">Get My Vibe Recommendations 🎧</button>
+  </form>
+</body>
+</html>
