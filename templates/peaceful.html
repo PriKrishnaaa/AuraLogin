@@ -1,0 +1,148 @@
+<!-- peaceful.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Peaceful Aura</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond&family=Quicksand&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Cormorant Garamond', serif;
+      background: url("{{ url_for('static', filename='images/peaceful-bg.jpeg') }}") no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+    }
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.6);
+      min-height: 100vh;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(14px);
+      border-radius: 20px;
+      padding: 30px;
+      width: 95%;
+      max-width: 700px;
+      margin-bottom: 25px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      color: #ffeef4;
+    }
+    h1, h3 {
+      font-family: 'Quicksand', sans-serif;
+      color: #ffe3f5;
+      margin-top: 0;
+    }
+    .description {
+      font-size: 1.1em;
+      color: #f8ddea;
+      line-height: 1.6em;
+    }
+    .aura-badge {
+      padding: 6px 12px;
+      border-radius: 8px;
+      background-color: {{ aura.aura_color }};
+      display: inline-block;
+      color: #333;
+      font-weight: bold;
+      font-size: 0.9em;
+      margin-top: 10px;
+    }
+    iframe.spotify {
+      width: 100%;
+      height: 152px;
+      border: none;
+      border-radius: 12px;
+      margin-top: 10px;
+    }
+    ul {
+      padding-left: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<audio id="bg-music" autoplay loop>
+  <source src="{{ url_for('static', filename='audio/Peaceful-sound.mp3') }}" type="audio/mp3">
+  Your browser does not support the audio element.
+</audio>
+
+<div class="overlay">
+
+  <div class="card">
+    <h1>Hello {{ name }} 🌿</h1>
+    <h3>Your peaceful aura has arrived</h3>
+    <p class="description">
+      <strong>Alter Ego:</strong> {{ aura.anime_name }}<br>
+      <strong>Element:</strong> {{ aura.star_element }}<br>
+      <strong>Aura Color:</strong> <span class="aura-badge">{{ aura.aura_color }}</span><br><br>
+      <em>“{{ aura.description }}”</em>
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>🕉️ Gita’s Wisdom</h3>
+    <p class="description">{{ aura.quote }}</p>
+  </div>
+
+  <div class="card">
+    <h3>🎧 Peaceful Playlist</h3>
+    <iframe class="spotify" src="{{ aura.playlist }}" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+  </div>
+
+  <div class="card">
+    <h3>🌸 Daily Affirmation</h3>
+    <p class="description">{{ aura.affirmation }}</p>
+  </div>
+
+  {% if aura.fashion %}
+  <div class="card">
+    <h3>👗 Fashion Mood of the Day</h3>
+    <p class="description">{{ aura.fashion }}</p>
+  </div>
+  {% endif %}
+
+  {% if aura.books %}
+  <div class="card">
+    <h3>📚 Recommended Biographies</h3>
+    <ul class="description">
+      {% for book in aura.books %}
+        <li>{{ book }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  <div class="card">
+    <h3>🧘 Lifestyle Tip</h3>
+    <p class="description">{{ aura.tip }}</p>
+  </div>
+
+  <div class="card">
+    <h3>🗣️ Gen Z Slang of the Mood</h3>
+    <ul class="description">
+      {% for slang, meaning in aura.slang.items() %}
+        <li><strong>{{ slang }}</strong> — {{ meaning }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  {% if aura.latest_gratitudes %}
+  <div class="card">
+    <h3>🪷 Your Recent Gratitude Entries</h3>
+    <ul class="description">
+      {% for g in aura.latest_gratitudes %}
+        <li>{{ g }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+</div>
+</body>
+</html>

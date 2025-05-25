@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sad Aura Reset</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond&family=Quicksand&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Cormorant Garamond', serif;
+      background: url("{{ url_for('static', filename='images/sad-bg.jpg') }}") no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+    }
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.65);
+      min-height: 100vh;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 30px;
+      margin: 20px 0;
+      width: 90%;
+      max-width: 800px;
+    }
+    h2 {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+    textarea {
+      width: 100%;
+      min-height: 100px;
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      resize: none;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 16px;
+    }
+    button {
+      background-color: #5f79a2;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .chat-box {
+      border: 1px solid #999;
+      border-radius: 10px;
+      padding: 15px;
+      background-color: rgba(255,255,255,0.1);
+      max-width: 600px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <audio autoplay loop>
+    <source src="{{ url_for('static', filename='audio/sad_theme.mp3') }}" type="audio/mp3">
+  </audio>
+  <div class="overlay">
+    <div class="card">
+      <h2>Hello, you 🌙</h2>
+      <p>You're doing better than you think. Let's gently shift your energy today.</p>
+    </div>
+    <div class="card">
+      <h2>Your Anime Alter Ego</h2>
+      <p><strong>Alter Name:</strong> {{ aura.anime_name }}</p>
+      <p><strong>Elemental Identity:</strong> {{ aura.star_element }}</p>
+      <p><strong>Aura Color:</strong> <span style="color: {{ aura.aura_color|lower|replace(' ', '') }}">{{ aura.aura_color }}</span></p>
+      <p><em>{{ aura.description }}</em></p>
+    </div>
+    <div class="card">
+      <h2>Daily Affirmation</h2>
+      <p>{{ aura.affirmation }}</p>
+    </div>
+    <div class="card">
+      <h2>Bhagavad Gita Quote</h2>
+      <p>{{ aura.quote }}</p>
+    </div>
+    <div class="card">
+      <h2>Sadness Tasks</h2>
+      <ul>
+        <li>Write what you wish someone told you today.</li>
+        <li>Drink water, breathe slowly for 30 seconds.</li>
+        <li>Look outside and name 3 things you see.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>Gen Z Slang of the Day</h2>
+      <ul>
+        {% for word, meaning in aura.slang.items() %}
+          <li><strong>{{ word }}</strong> - <em>{{ meaning }}</em></li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="card">
+      <h2>Hug Wall 🤗</h2>
+      <p>“You’re not alone, even when you feel it.”</p>
+      <p>Read a hug someone else left, or send your own kind note to the wall.</p>
+      {% if aura.hugs %}
+        <div style="margin-bottom: 10px; background-color: rgba(255,255,255,0.1); padding: 10px; border-radius: 10px;">
+          <em>Here's a hug someone shared:</em>
+          <blockquote style="margin-top: 5px; font-style: italic; color: #ffddee;">{{ aura.hugs[0] }}</blockquote>
+        </div>
+      {% endif %}
+      <form method="POST" action="/sendhug">
+        <input type="hidden" name="name" value="{{ name }}">
+        <input type="hidden" name="dob" value="{{ dob }}">
+        <input type="hidden" name="gender" value="{{ gender }}">
+        <input type="hidden" name="mood" value="sad">
+        <textarea name="hug_note" placeholder="Send someone a kind note..."></textarea><br><br>
+        <button type="submit">Send Hug</button>
+      </form>
+    </div>
+    <div class="card">
+      <h2>Letter to Future Self 📩</h2>
+      <p>Write to your strongest, happiest version. They'll be so proud of how you kept going.</p>
+      <form method="POST" action="/saveletter">
+          <input type="hidden" name="name" value="{{ name }}">
+          <input type="hidden" name="dob" value="{{ dob }}">
+          <input type="hidden" name="gender" value="{{ gender }}">
+          <input type="hidden" name="mood" value="sad"> <!-- ✅ NOT "redirect" -->
+          <textarea name="future_letter" placeholder="Dear Future Me..."></textarea><br><br>
+          <button type="submit">Seal Letter</button>
+      </form>
+
+    </div>
+    <div class="card">
+      <h2>Cheer-Up Music</h2>
+      <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DWSqBruwoIXkA" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    </div>
+    <div class="card">
+      <h2>Books to Curl Up With 📚</h2>
+      <p>Sometimes stories remind us that healing is real. Here are a few gentle reads for your soul:</p>
+      <ul style="list-style: none; padding-left: 0;">
+        {% for book in aura.books %}
+          <li style="margin-bottom: 20px; display: flex; gap: 15px; align-items: center;">
+            <img src="{{ book.cover }}" alt="Cover" style="height: 120px; border-radius: 10px;">
+            <div>
+              <p style="margin: 0;"><strong>{{ book.title }}</strong> by {{ book.author }}</p>
+              <a href="{{ book.link }}" target="_blank" style="color: #ccc;">Open Library ↗</a>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="card chat-box">
+      <h2>Talk to Aura</h2>
+      <input type="text" id="userInput" placeholder="Type your feeling here...">
+      <button onclick="talkToAura()">Send</button>
+      <p id="auraResponse"></p>
+    </div>
+  </div>
+  <script>
+    function talkToAura() {
+      const input = document.getElementById('userInput').value.toLowerCase();
+      const response = document.getElementById('auraResponse');
+      fetch('/log_aura_message', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'message=' + encodeURIComponent(input)
+      });
+      if (input.includes("lost")) {
+        response.innerText = "Lost is where the map begins.";
+      } else if (input.includes("sad")) {
+        response.innerText = "Sadness means your soul is speaking. Let it.";
+      } else {
+        response.innerText = "I’m here. I’m listening.";
+      }
+    }
+  </script>
+</body>
+</html>

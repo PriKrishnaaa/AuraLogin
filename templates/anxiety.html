@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Anxiety Aura Reset</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand&family=Space+Mono&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Quicksand', sans-serif;
+      background: url("{{ url_for('static', filename='images/anxiety-bg.png') }}") no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+    }
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.55);
+      min-height: 100vh;
+      padding: 50px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 30px;
+      max-width: 720px;
+      width: 100%;
+      margin-bottom: 25px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    }
+    h1, h3 {
+      font-family: 'Space Mono', monospace;
+      color: #e6faff;
+    }
+    .description {
+      font-size: 1.1em;
+      color: #daf5f0;
+    }
+    .aura-badge {
+      padding: 6px 12px;
+      border-radius: 8px;
+      background-color: #fff;
+      display: inline-block;
+      color: #000;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    #breath-box {
+      width: 200px;
+      height: 200px;
+      border: 3px solid #a5f5f7;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.1em;
+      margin: 20px auto;
+      animation: none;
+    }
+    @keyframes triangle-breath {
+      0%   { transform: scale(1); }
+      33%  { transform: scale(1.2); }
+      66%  { transform: scale(0.8); }
+      100% { transform: scale(1); }
+    }
+    .toggle-btn {
+      padding: 12px 24px;
+      border: none;
+      background: linear-gradient(135deg, #a5f5f7, #d0fafa);
+      color: #111;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 1rem;
+      transition: transform 0.3s ease;
+      box-shadow: 0 0 15px rgba(165, 245, 247, 0.4);
+    }
+    .toggle-btn.pulse {
+      animation: pulse-button 1.5s infinite;
+    }
+    @keyframes pulse-button {
+      0% { transform: scale(1); box-shadow: 0 0 10px #a5f5f7; }
+      50% { transform: scale(1.07); box-shadow: 0 0 25px #a5f5f7; }
+      100% { transform: scale(1); box-shadow: 0 0 10px #a5f5f7; }
+    }
+    textarea {
+      resize: vertical;
+      width: 100%;
+      border-radius: 12px;
+      padding: 10px;
+    }
+    ul.description li {
+      margin-bottom: 6px;
+    }
+  </style>
+
+  <script>
+    let isBreathing = false;
+    function toggleBreath() {
+      const box = document.getElementById('breath-box');
+      const button = document.getElementById('breath-toggle');
+      if (!isBreathing) {
+        box.style.animation = 'triangle-breath 6s infinite ease-in-out';
+        box.innerText = 'Breathe In... Hold... Out...';
+        button.classList.add('pulse');
+        button.innerText = '🛑 Stop Breathing';
+      } else {
+        box.style.animation = 'none';
+        box.innerText = 'Triangle Breath';
+        button.classList.remove('pulse');
+        button.innerText = '🌬️ Start Breathing';
+      }
+      isBreathing = !isBreathing;
+    }
+
+    window.onload = () => {
+      const audio = document.getElementById('bg-audio');
+      audio.muted = false;
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          console.log('🎵 Background audio is playing.');
+        }).catch(() => {
+          console.log('⚠️ Autoplay blocked. User interaction required.');
+        });
+      }
+    };
+
+    function enableYouTube() {
+      const yt = document.getElementById('yt-player');
+      yt.src = yt.src.replace('&mute=1', '');
+      yt.style.display = 'block';
+      document.getElementById('yt-message').style.display = 'none';
+    }
+  </script>
+</head>
+<body>
+
+<audio id="bg-audio" autoplay loop muted>
+  <source src="{{ url_for('static', filename='audio/water-sound.mp3') }}" type="audio/mpeg">
+</audio>
+
+<div class="overlay">
+
+  <div class="card">
+    <h1>Hello {{ name }} 🧠</h1>
+    <h3>Let’s soften the anxiety in your aura</h3>
+    <p class="description">
+      <strong>Alter Ego:</strong> {{ aura.anime_name }}<br>
+      <strong>Element:</strong> {{ aura.star_element }}<br>
+      <strong>Aura Color:</strong> <span class="aura-badge">{{ aura.aura_color }}</span><br><br>
+      <em>“{{ aura.description }}”</em>
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>🕉️ Gita’s Wisdom</h3>
+    <p class="description">{{ aura.quote }}</p>
+  </div>
+
+  <div class="card">
+    <h3>🎿 Krishna Devotional Playlist</h3>
+    <iframe id="yt-player" width="100%" height="200"
+      src="{{ aura.playlist }}&autoplay=1&mute=1"
+      frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+    </iframe>
+    <div id="yt-message" style="display:none; margin-top: 10px;">
+      <p>🎵 Tap to play the Krishna playlist:</p>
+      <button class="toggle-btn" onclick="enableYouTube()">Play Now</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🌬️ Triangle Breathing</h3>
+    <div id="breath-box">Triangle Breath</div>
+    <button id="breath-toggle" class="toggle-btn" onclick="toggleBreath()">🌬️ Start Breathing</button>
+  </div>
+
+  <div class="card">
+    <h3>🧘 Lifestyle Tip</h3>
+    <p class="description">{{ aura.tip }}</p>
+  </div>
+
+  <div class="card">
+    <h3>🗣️ Gen Z Slang</h3>
+    <ul class="description">
+      {% for slang, meaning in aura.slang.items() %}
+        <li><strong>{{ slang }}</strong> — <em>{{ meaning }}</em></li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>📝 Spill Your Thoughts</h3>
+    <form action="/journals" method="POST">
+      <textarea name="entry" rows="4" placeholder="Write how you're feeling today..." required></textarea>
+      <input type="hidden" name="redirect" value="anxiety">
+      <input type="hidden" name="name" value="{{ name }}">
+      <input type="hidden" name="dob" value="{{ dob }}">
+      <input type="hidden" name="gender" value="{{ gender }}">
+      <button type="submit" class="toggle-btn" style="margin-top: 10px;">Submit Journal</button>
+    </form>
+  </div>
+
+  {% if aura.latest_journals %}
+  <div class="card">
+    <h3>📖 Latest Reflections</h3>
+    <ul class="description">
+      {% for line in aura.latest_journals %}
+        <li>{{ line }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+</div>
+</body>
+</html>

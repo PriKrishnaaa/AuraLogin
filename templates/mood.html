@@ -1,25 +1,107 @@
-  
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Your Anime Aura</title>
+  <title>Select Your Mood – AuraLogin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(270deg, #ffdde1, #fbc2eb, #a6c1ee);
+      background-size: 600% 600%;
+      animation: floatColors 20s ease infinite;
+      font-family: 'Poppins', sans-serif;
+      color: #333;
+      padding: 60px 20px;
+      margin: 0;
+    }
+
+    @keyframes floatColors {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .form-box {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 24px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      padding: 40px 30px;
+      width: 90%;
+      max-width: 420px;
+      margin: auto;
+    }
+
+    h1 {
+      font-size: 2.4em;
+      color: #7e57c2;
+      font-family: 'Pacifico', cursive;
+      margin-bottom: 0.5em;
+    }
+
+    label {
+      display: block;
+      margin: 16px 0 6px;
+      text-align: left;
+      font-weight: 500;
+      font-size: 0.95em;
+    }
+
+    select {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+    }
+
+    input[type="hidden"] {
+      display: none;
+    }
+
+    button {
+      background-color: #f06292;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-size: 1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #ec407a;
+    }
+  </style>
 </head>
 <body>
-  <h1>✨ Your Anime Aura ✨</h1>
-  <p><strong>Name:</strong> {{ alter_ego.anime_name }}</p>
-  <p><strong>Vibe Color:</strong> {{ alter_ego.vibe_color }}</p>
-  <p><strong>Star Element:</strong> {{ alter_ego.star_element }}</p>
 
-  <h2>💭 How are you feeling right now?</h2>
-  <form action="/mood" method="POST">
-    <select name="mood" required>
-      <option value="">--Select Mood--</option>
-      <option value="happy">😊 Happy</option>
-      <option value="sad">😔 Sad</option>
-      <!-- You can add more moods -->
-    </select><br><br>
-    <button type="submit">Get My Vibe Recommendations 🎧</button>
-  </form>
+  <div class="form-box">
+    <h1>Hey {{ name }} 👋</h1>
+    <p>Select the vibe you're feeling today:</p>
+    <form action="/mood" method="POST">
+      <label for="mood">Your Current Mood</label>
+      <select id="mood" name="mood" required>
+        <option value="">--Choose a vibe--</option>
+        <option value="peaceful">🌿 Peaceful</option>
+        <option value="excited">⚡ Excited</option>
+        <option value="Anxiety">🌧️ Anxiety</option>
+        <option value="creative">🎨 Creative</option>
+        <option value="Sad">💖 Sad</option>
+      </select>
+
+      <!-- Hidden fields to pass previous data -->
+      <input type="hidden" name="name" value="{{ name }}">
+      <input type="hidden" name="dob" value="{{ dob }}">
+      <input type="hidden" name="gender" value="{{ gender }}">
+
+      <button type="submit">Let’s vibe ✨</button>
+    </form>
+  </div>
+
 </body>
 </html>

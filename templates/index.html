@@ -1,31 +1,92 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>AuraLogin – Enter Your Vibe</title>
-  <link rel="stylesheet" href="/static/css/styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #fceff9, #e0f7fa);
+      font-family: 'Poppins', sans-serif;
+      color: #333;
+      padding: 60px 20px;
+      margin: 0;
+    }
+    .form-box {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 24px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      padding: 40px 30px;
+      width: 90%;
+      max-width: 420px;
+      margin: auto;
+    }
+    h1 {
+      font-size: 2.6em;
+      color: #7e57c2;
+      margin-bottom: 0.3em;
+      font-family: 'Pacifico', cursive;
+    }
+    .decor {
+      font-size: 1.1em;
+      color: #ba68c8;
+      margin-bottom: 1.8em;
+    }
+    label {
+      display: block;
+      margin: 16px 0 6px;
+      text-align: left;
+      font-weight: 500;
+      font-size: 0.95em;
+    }
+    input, select {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 10px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+    }
+    button {
+      background-color: #f06292;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-size: 1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background-color: #ec407a;
+    }
+  </style>
 </head>
 <body>
-  <div class="form-container">
-    <h1>🌟 Enter Your Aura</h1>
-    <form action="/submit_form" method="POST">
-      <label>Name:</label>
-      <input type="text" name="name" required><br>
 
-      <label>Gender:</label>
-      <select name="gender" required>
+  <div class="form-box">
+    <h1>AuraLogin</h1>
+    <div class="decor">Soft like petals, sharp like vibes 🌸✨</div>
+    <form action="/submit_form" method="POST">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="gender">Gender</label>
+      <select id="gender" name="gender" required>
         <option value="">--Select--</option>
         <option value="male">Male</option>
         <option value="female">Female</option>
         <option value="nonbinary">Non-Binary</option>
-      </select><br>
+      </select>
 
-      <label>Date of Birth:</label>
-      <input type="date" name="dob" required><br>
+      <label for="dob">Date of Birth</label>
+      <input type="date" id="dob" name="dob" required>
 
       <button type="submit">Reveal My Aura ✨</button>
     </form>
   </div>
 </body>
 </html>
- 
